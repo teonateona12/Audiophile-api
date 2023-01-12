@@ -34,3 +34,22 @@ paths:
       responses:
         "200":
           description: user add
+  /login:
+    post:
+      tags:
+        - user
+      requestBody:
+        description: user authorization
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: login successfully
