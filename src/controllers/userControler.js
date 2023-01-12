@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+const JWT_SECRET_KEY = "MyKey";
 
 export const signup = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -47,5 +49,11 @@ export const login = async (req, res, next) => {
   if (!isPasswordCorrect) {
     return res.status(400).json({ message: "Invalid Email/Passwprd" });
   }
-  return res.status(200).json({ message: "Succesfully Logged" });
+
+  const token = jwt.sign({ id: existingUser._id }, JWT_SECRET_KEY, {
+    expiresIn: "1hr",
+  });
+  return res
+    .status(200)
+    .json({ message: "Succesfully Logged In", user: existingUser, token });
 };

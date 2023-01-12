@@ -10,11 +10,9 @@ import swaggerMiddleware from "./middlewares/swagger-middleware.js";
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-
+app.use("/avatar", express.static("public/avatar"));
 app.use("/api", router);
-
 app.use("/", ...swaggerMiddleware);
-
 dotenv.config();
 connection();
 
