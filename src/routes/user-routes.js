@@ -1,6 +1,7 @@
 import express from "express";
 import { signup, login } from "../controllers/userControler.js";
 import multer from "multer";
+import getProducts from "../controllers/productsController.js";
 
 const router = express.Router();
 const fileStorageAvatar = multer.diskStorage({
@@ -30,5 +31,7 @@ router.post(
   signup
 );
 router.post("/login", login);
+
+router.get("/products", getProducts);
 
 export default router;

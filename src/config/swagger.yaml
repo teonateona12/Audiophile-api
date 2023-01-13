@@ -5,7 +5,7 @@ info:
   version: 0.1.9
 
 servers:
-  - url: https://entertainment-web.onrender.com/api
+  - url: https://audiophile-r04o.onrender.com/api
     description: production server
   - url: http://localhost:5000/api
     description: local server
@@ -53,3 +53,40 @@ paths:
       responses:
         "200":
           description: login successfully
+  /signup:
+    post:
+      tags:
+        - user
+      requestBody:
+        description: add user
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+                email:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+      responses:
+        "200":
+          description: user add
+  /products:
+    get:
+      tags:
+        - Products
+      responses:
+        '200':
+          description: get all products info successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
