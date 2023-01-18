@@ -1,9 +1,10 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
 const JWT_SECRET_KEY = "MyKey";
 
-export const signup = async (req, res, next) => {
+export const signup = async (req, res) => {
   const { name, email, password } = req.body;
   const { file } = req;
 
@@ -32,7 +33,7 @@ export const signup = async (req, res, next) => {
   return res.status(201).json({ message: user });
 };
 
-export const login = async (req, res, next) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
 
   let existingUser;
@@ -56,4 +57,27 @@ export const login = async (req, res, next) => {
   return res
     .status(200)
     .json({ message: "Succesfully Logged In", user: existingUser, token });
+};
+
+export const emailVerification = async (req, res) => {
+  const { hash } = req.body;
+
+  const emailVerification = await EmailVerification.findOne({ hash });
+
+  if (!emailVerification) {
+    return res.status(422).json({ message: "მონაცემები ვერ მოიძებნა" });
+  }
+
+  const email = await Email.findOne({ email: emailVerification.email });
+
+  if (!email) {
+    return res.status(422).json({ message: "მონაცემები ვერ მოიძებნა" });
+  }
+
+  await email.updateOne({ verify: true });
+  await User.findOneAndUpdate({ id: email.userId }, { confirmed: true });
+
+  await emailVerification.delete();
+
+  return res.json({ message: "email verified" });
 };

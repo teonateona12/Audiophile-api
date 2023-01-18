@@ -1,5 +1,9 @@
 import express from "express";
-import { signup, login } from "../controllers/userControler.js";
+import {
+  signup,
+  login,
+  emailVerification,
+} from "../controllers/userControler.js";
 import multer from "multer";
 import getProducts from "../controllers/productsController.js";
 
@@ -31,6 +35,7 @@ router.post(
   signup
 );
 router.post("/login", login);
+router.post("/verify", emailVerification);
 
 router.get("/products", getProducts);
 
