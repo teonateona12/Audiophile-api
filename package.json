@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "startDev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "edge.js": "^5.5.0",
     "express": "^4.18.2",
@@ -25,6 +26,7 @@
     "nodemailer": "^6.9.0",
     "nodemon": "^2.0.20",
     "swagger-ui-express": "^4.6.0",
+    "uuid": "^9.0.0",
     "yamljs": "^0.3.0"
   }
 }

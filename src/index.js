@@ -6,7 +6,8 @@ import router from "./routes/user-routes.js";
 import cors from "cors";
 import path, { join } from "path";
 import { Edge } from "edge.js";
-import gmailTransport from "./mail/gmail.js";
+import crypto from "crypto";
+// import gmailTransport from "./mail/gmail.js";
 
 const send = (to, subject, html) => {
   const options = {

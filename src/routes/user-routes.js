@@ -1,11 +1,9 @@
 import express from "express";
-import {
-  signup,
-  login,
-  emailVerification,
-} from "../controllers/userControler.js";
+import { signup, login, authMe } from "../controllers/userControler.js";
 import multer from "multer";
 import getProducts from "../controllers/productsController.js";
+import { getCart, postCart } from "../controllers/cartController.js";
+import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 const fileStorageAvatar = multer.diskStorage({
@@ -35,8 +33,12 @@ router.post(
   signup
 );
 router.post("/login", login);
-router.post("/verify", emailVerification);
+// router.post("/verify", emailVerification);
+router.post("/cart", postCart);
 
 router.get("/products", getProducts);
+router.get("/carts", getCart);
+// router.put("/cart/update", putCart);
+router.get("/auth/me", authMiddleware, authMe);
 
 export default router;
