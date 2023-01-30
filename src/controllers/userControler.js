@@ -2,9 +2,11 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import Verify from "../models/Verification.js";
+import { sendEmailConfirmation } from "../mail/index.js";
 
 export const signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, backLink } = req.body;
   const { file } = req;
   let existingUser;
   try {
@@ -27,8 +29,12 @@ export const signup = async (req, res) => {
     password: hash,
     avatar: file.originalname,
     id,
+    verify: false,
   });
 
+  const verificationHash = crypto.randomBytes(48).toString("hex");
+  await Verify.create({ hash: verificationHash, email });
+  await sendEmailConfirmation(email, verificationHash, name, backLink);
   try {
     await user.save();
   } catch (error) {
