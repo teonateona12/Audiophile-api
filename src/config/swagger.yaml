@@ -74,6 +74,8 @@ paths:
     get:
       tags:
         - Products
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: get all products info successfully
@@ -121,6 +123,19 @@ paths:
                 type: array
                 items:
                   type: string
+  /carts/{id}:
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: cart deleted
   # /cart/update:
   #   put:
   #     tags:

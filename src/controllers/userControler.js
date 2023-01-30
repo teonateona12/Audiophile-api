@@ -58,7 +58,7 @@ export const login = async (req, res) => {
     const signData = {
       name: existingUser.name,
       id: existingUser.id,
-      image: existingUser.image,
+      image: existingUser.avatar,
     };
     const token = jwt.sign(signData, process.env.JWT_SECRET_KEY || "", {
       expiresIn: "1hr",
