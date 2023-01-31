@@ -138,26 +138,3 @@ paths:
       responses:
         "200":
           description: cart deleted
-  # /cart/update:
-  #   put:
-  #     tags:
-  #       - Cart
-  #     requestBody:
-  #       description: update cart
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             type: object
-  #             properties:
-  #               name:
-  #                 type: string
-  #               price:
-  #                 type: string
-  #               number:
-  #                 type: number
-  #               image:
-  #                 type: string
-  #     responses:
-  #       '200':
-  #         description: cart updated

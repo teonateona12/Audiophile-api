@@ -1,5 +1,10 @@
 import express from "express";
-import { signup, login, authMe } from "../controllers/userControler.js";
+import {
+  signup,
+  login,
+  authMe,
+  emailVerification,
+} from "../controllers/userControler.js";
 import multer from "multer";
 import getProducts from "../controllers/productsController.js";
 import {
@@ -37,12 +42,11 @@ router.post(
   signup
 );
 router.post("/login", login);
-// router.post("/verify", emailVerification);
+router.post("/verification", emailVerification);
 router.post("/cart", postCart);
 
 router.get("/products", authMiddleware, getProducts);
 router.get("/carts", getCart);
-// router.put("/cart/update", putCart);
 router.get("/auth/me", authMiddleware, authMe);
 router.delete("/carts/:id", deleteCart);
 

@@ -48,7 +48,7 @@ export const login = async (req, res) => {
 
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await User.findOne({ email: email, verify: true });
   } catch (error) {
     return new Error(error);
   }
@@ -67,7 +67,7 @@ export const login = async (req, res) => {
       image: existingUser.avatar,
     };
     const token = jwt.sign(signData, process.env.JWT_SECRET_KEY || "", {
-      expiresIn: "1hr",
+      expiresIn: "3hr",
     });
     return res.status(200).json({ token });
   }
@@ -83,25 +83,18 @@ export const authMe = async (req, res) => {
   return res.status(200).json(user);
 };
 
-// export const emailVerification = async (req, res) => {
-//   const { hash } = req.body;
+export const emailVerification = async (req, res) => {
+  const { hash } = req.body;
 
-//   const emailVerification = await EmailVerification.findOne({ hash });
-
-//   if (!emailVerification) {
-//     return res.status(422).json({ message: "მონაცემები ვერ მოიძებნა" });
-//   }
-
-//   const email = await Email.findOne({ email: emailVerification.email });
-
-//   if (!email) {
-//     return res.status(422).json({ message: "მონაცემები ვერ მოიძებნა" });
-//   }
-
-//   await email.updateOne({ verify: true });
-//   await User.findOneAndUpdate({ id: email.userId }, { confirmed: true });
-
-//   await emailVerification.delete();
-
-//   return res.json({ message: "email verified" });
-// };
+  const emailVerification = await Verify.findOne({ hash });
+  if (!emailVerification) {
+    return res.status(422).json({ message: "მონაცემები ვერ მოიძებნა 1" });
+  }
+  const user = await User.findOne({ email: emailVerification.email });
+  if (!user) {
+    return res.status(422).json({ message: "მონაცემები ვერ მოიძებნა 2" });
+  }
+  await user.updateOne({ verify: true });
+  await emailVerification.delete();
+  return res.json({ message: "email verified" });
+};
